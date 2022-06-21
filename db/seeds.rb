@@ -14,8 +14,8 @@ Submission.destroy_all
 u1 = User.create(username: "albert", password: "123", password_confirmation: "123", is_admin: true)
 u2 = User.create(username: "bobert", password: "1234", password_confirmation: "1234")
 
-b1 = Battle.create(name: "battle 1", is_ended: false)
-b2 = Battle.create(name: "battle 2", is_ended: false)
+b1 = Battle.create(name: "battle 1", prompt: "prompt 1", is_ended: false)
+b2 = Battle.create(name: "battle 2", prompt: "prompt 2", is_ended: false)
 
 s1 = Submission.create(name: "my first song", url: "a", user_id: u1.id, battle_id: b1.id)
 s2 = Submission.create(name: "other song", url: "b", user_id: u2.id, battle_id: b1.id)
