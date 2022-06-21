@@ -8,8 +8,9 @@ Rails.application.routes.draw do
   resources :votes, only: [:show, :create, :update]
   resources :battles, only: [:index, :show, :create]
   resources :submissions, only: [:show, :create]
-  resources :users, only: [:show]
+  resources :users, only: [:show, :create]
 
   post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 
 end
