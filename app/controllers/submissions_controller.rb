@@ -26,7 +26,6 @@ class SubmissionsController < ApplicationController
     end
 
     def authorize
-        battle = Battle.find_by(id: params[:battle_id])
 
         # puts session[:user_id]
         # puts params[:user_id]

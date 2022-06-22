@@ -13,4 +13,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  post "/endbattle/:id", to: "battles#end_battle"
+
 end
