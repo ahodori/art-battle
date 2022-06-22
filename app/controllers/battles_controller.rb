@@ -7,9 +7,9 @@ class BattlesController < ApplicationController
     end
 
     def show
-        battle = Battle.find_by(id: params[:battle_id])
+        battle = Battle.find_by(id: params[:id])
         if battle
-            render json: battle
+            render json: battle, serializer: SingleBattleSerializer
         else
             render json: { error: "Battle not found" }, status: 404
         end
