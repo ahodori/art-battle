@@ -1,5 +1,5 @@
 class BattlesController < ApplicationController
-    before_action :authorize, only: [:create]
+    before_action :authorize, only: [:create, :end_battle]
 
     def index
         battles = Battle.all
