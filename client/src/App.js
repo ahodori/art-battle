@@ -12,9 +12,19 @@ function App() {
   const [loginErrorText, setLoginErrorText] = useState("");
 
   //TODO: autoset current user if cookie exists
-  // useEffect(() => {
-  //   return;
-  // }, [])
+  useEffect(() => {
+    fetch("/me")
+    .then(res => {
+      console.log(res);
+      if (res.ok) {
+        res.json().then((json) => {
+          console.log(json);
+          setCurrentUser(json);
+          setLoggedIn(true);
+        });
+      }
+    })
+  }, [])
 
   function handleLogin(e) {
     e.preventDefault();

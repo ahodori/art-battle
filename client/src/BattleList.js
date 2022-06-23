@@ -18,7 +18,7 @@ function BattleList() {
     }, [])
 
     return (<div>
-        {battleArray ?
+        {battleArray.length > 0 ?
             (battleArray.map((battle) => {
                 return <BattleListCard battle={battle}/>
             }))

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :submissions, only: [:show, :create]
   resources :users, only: [:show, :create]
 
-  get "/me", to: "user#show_session"
+  get "/me", to: "users#show_session"
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
