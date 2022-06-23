@@ -4,7 +4,7 @@ class SubmissionsController < ApplicationController
     def show
         submission = Submission.find_by(id: params[:id])
         if submission
-            render json: submission
+            render json: submission, status: ok
         else
             render json: { error: "Submission not found" }, status: 404
         end

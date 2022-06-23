@@ -9,7 +9,7 @@ class VotesController < ApplicationController
         vote = Vote.find_or_create_by(user_id: params[:user_id], submission_id: params[:submission_id])
         vote.update(score: params[:score])
         if vote.valid?
-            render json: vote
+            render json: vote, status: created
         else
             render json: { errors: vote.errors.full_messages }, status: 422
         end

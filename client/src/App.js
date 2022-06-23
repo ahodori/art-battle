@@ -32,22 +32,20 @@ function App() {
     })
       .then(res => {
         console.log(res);
-        return res.json();
-      })
-      .then(json => {
-        if (json.error) {
-          console.error("Error:", json.error);
-          setLoginErrorText(json.error);          
+
+        if (res.ok) {
+          res.json().then((json) => {
+            console.log(json);
+            setCurrentUser(json);
+            setLoggedIn(true);
+            setLoginErrorText("");
+          })
         } else {
-          console.log(json);
-          setCurrentUser(json);
-          setLoggedIn(true);
-          setLoginErrorText("");
+          res.json().then((json) => {
+            console.error("Error:", json.error);
+            setLoginErrorText(json.error);   
+          })
         }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        setLoginErrorText(error);
       });
     }
 
@@ -84,7 +82,8 @@ function App() {
           <Route path=":id" element={<UserProfile/>}/>
         </Route> */}
         <Route path="/battle">
-          <Route path=":id" element={<BattlePage currentUser={currentUser}/>}/>
+          <Route path=":id" element={<BattlePage currentUser={currentUser}
+                                                 loggedIn={loggedIn}/>}/>
         </Route>
       </Routes>
     </div>

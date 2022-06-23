@@ -3,13 +3,13 @@ class BattlesController < ApplicationController
 
     def index
         battles = Battle.all
-        render json: battles
+        render json: battles, status: ok
     end
 
     def show
         battle = Battle.find_by(id: params[:id])
         if battle
-            render json: battle, serializer: SingleBattleSerializer
+            render json: battle, status: ok, serializer: SingleBattleSerializer
         else
             render json: { error: "Battle not found" }, status: 404
         end
@@ -18,7 +18,7 @@ class BattlesController < ApplicationController
     def create
         battle = Battle.create(battle_params)
         if battle.valid?
-            render json: battle
+            render json: battle, status: created
         else
             render json: { error: battle.errors.full_messages }, status: 422
         end
@@ -46,7 +46,7 @@ class BattlesController < ApplicationController
 
         battle.update(winner: highest_submission.first, is_ended: true)
         if battle.valid?
-            render json: battle
+            render json: battle, status: ok
         else
             render json: { error: "Error ending battle" }, status: 500
         end
