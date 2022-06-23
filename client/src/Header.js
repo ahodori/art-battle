@@ -4,7 +4,8 @@ function Header({currentUser,
                  loggedIn,
                  handleLogout,
                  handleLogin,
-                 handleSignup}) {
+                 handleSignup,
+                 loginErrorText}) {
     const [showSignup, setShowSignup] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
 
@@ -14,7 +15,8 @@ function Header({currentUser,
         {loggedIn ?
             (<div>
                 <p>{currentUser?.name}</p>
-                <p>Log out</p>
+                <p onClick={handleLogout}>Log out</p>
+                {loginErrorText && <p>{loginErrorText}</p>}
             </div>)
         :
             (<div>
@@ -25,6 +27,7 @@ function Header({currentUser,
                     <label>Password:<input type="text" name="password"/></label>
                     <input type="submit" value="Log in"/>
                 </form>}
+                {loginErrorText && <p>{loginErrorText}</p>}
             </div>)
         }
     </div>);

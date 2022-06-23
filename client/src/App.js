@@ -9,10 +9,12 @@ import BattlePage from './BattlePage';
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
+  const [loginErrorText, setLoginErrorText] = useState("");
 
-  useEffect(() => {
-    return;
-  }, [])
+  //TODO: autoset current user if cookie exists
+  // useEffect(() => {
+  //   return;
+  // }, [])
 
   function handleLogin(e) {
     e.preventDefault();
@@ -33,15 +35,34 @@ function App() {
         return res.json();
       })
       .then(json => {
-        console.log(json);
-        setCurrentUser(json);
-        setLoggedIn(true);
+        if (json.error) {
+          console.error("Error:", json.error);
+          setLoginErrorText(json.error);          
+        } else {
+          console.log(json);
+          setCurrentUser(json);
+          setLoggedIn(true);
+          setLoginErrorText("");
+        }
       })
-      .catch(error => console.log("Error:", error));
+      .catch(error => {
+        console.error("Error:", error);
+        setLoginErrorText(error);
+      });
     }
 
   function handleLogout(e) {
     e.preventDefault();
+
+    fetch("/logout",{
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json'
+      }})
+    .then(res => {
+      setCurrentUser({});
+      setLoggedIn(false);
+    })
   }
 
   function handleSignup(e) {
@@ -55,7 +76,8 @@ function App() {
               loggedIn={loggedIn}
               handleLogin={handleLogin}
               handleLogout={handleLogout}
-              handleSignup={handleSignup}/>
+              handleSignup={handleSignup}
+              loginErrorText={loginErrorText}/>
       <Routes>
         <Route path="/" element={<BattleList/>}/>
         {/* <Route path="/user">
