@@ -34,11 +34,14 @@ function App() {
       })
       .then(json => {
         console.log(json);
+        setCurrentUser(json);
+        setLoggedIn(true);
       })
+      .catch(error => console.log("Error:", error));
     }
 
   function handleLogout(e) {
-
+    e.preventDefault();
   }
 
   function handleSignup(e) {
