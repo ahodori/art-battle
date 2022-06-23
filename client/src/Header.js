@@ -14,7 +14,7 @@ function Header({currentUser,
         thee ultimate art battle
         {loggedIn ?
             (<div>
-                <p>{currentUser?.name}</p>
+                <p>Welcome, {currentUser?.username}</p>
                 <p onClick={handleLogout}>Log out</p>
                 {loginErrorText && <p>{loginErrorText}</p>}
             </div>)

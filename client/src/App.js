@@ -84,7 +84,7 @@ function App() {
           <Route path=":id" element={<UserProfile/>}/>
         </Route> */}
         <Route path="/battle">
-          <Route path=":id" element={<BattlePage/>}/>
+          <Route path=":id" element={<BattlePage currentUser={currentUser}/>}/>
         </Route>
       </Routes>
     </div>
