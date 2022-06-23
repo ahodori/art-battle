@@ -20,6 +20,33 @@ function BattlePage({currentUser, loggedIn}) {
         })
     }, [])
 
+    function handleSubmitVote(e, submissionId) {
+        e.preventDefault();
+        console.log(e);
+
+        fetch("/votes", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: currentUser.id,
+                submission_id: submissionId,
+                score: parseInt(e.target[0].value)
+            })
+        })
+        .then(res => {
+            console.log(res)
+            if (res.ok) {
+
+            } else {
+                res.json().then((json) => {
+                    console.log(json);
+                })
+            }
+        })
+    }
+
 
     return (<div>
         {Object.keys(battle).length > 0 ?
@@ -30,17 +57,25 @@ function BattlePage({currentUser, loggedIn}) {
                 {loggedIn && <button>Submit</button>}
                 {currentUser.is_admin && <button>End battle</button>}
                 {battle.submissions.map((submission) => {
+                    const submission_vote = battle.votes?.find((vote) => vote.submission_id === submission.id)
+                    //console.log(submission_vote)
+
                     return (<div key={submission.id}>
                         <p>{submission.name}</p>
                         <p>{submission.url}</p>
                         <p>By {submission.user.username}</p>
                         {loggedIn &&
-                            <form>
+                            <form onSubmit={(e) => handleSubmitVote(e, submission.id)}>
                                 <label>Vote: 1
-                                    {range(1,10,1).map((value) => <input type="radio" name="score" value={value}/>)}
-                                    10
+                                    {(submission_vote && submission_vote.score) ?
+                                            <input type="number" name="score" min="1" max="10" defaultValue={submission_vote.score}/>
+                                    :
+                                        <input type="number" name="score" min="1" max="10"/>
+                                    }
+                                    10 
                                 </label>
-                                </form>
+                                <input type="submit" value="Submit vote"></input>
+                            </form>
                         }
                         
                     </div>)
