@@ -8,4 +8,5 @@ class Vote < ApplicationRecord
     validates :score, presence: true
 
     validates :user_id, uniqueness: { scope: :submission_id, message: "Only one vote per submission per user is allowed"}
+    validates :score, numericality: { in: 1..10 }
 end
