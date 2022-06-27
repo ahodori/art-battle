@@ -16,4 +16,7 @@ Rails.application.routes.draw do
 
   post "/endbattle/:id", to: "battles#end_battle"
 
+  get '*path',
+    to: 'fallback#index',
+    constraints: ->(req) { !req.xhr? && req.format.html? }
 end
