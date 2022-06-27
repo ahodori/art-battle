@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Navbar, Container, Button, Alert, Nav } from "react-bootstrap";
 
 function Header({currentUser,
                  loggedIn,
@@ -10,27 +11,36 @@ function Header({currentUser,
     const [showSignup, setShowSignup] = useState(false)
     const [showLogin, setShowLogin] = useState(false)
 
-    return (<div>
-        <Link to="/">thee ultimate art battle</Link>
+    return (
+        <>
+        <Navbar bg="dark" variant="dark">
+        <Container>
+        <Navbar.Brand><Link to="/">thee ultimate art battle</Link></Navbar.Brand>
+        <Navbar.Collapse className="justify-content-end">
         {loggedIn ?
-            (<div>
-                <p>Welcome, {currentUser?.username}</p>
-                <p onClick={handleLogout}>Log out</p>
-                {loginErrorText && <p>{loginErrorText}</p>}
-            </div>)
+            (<Nav>
+                <Nav.Item><Nav.Link>Welcome, {currentUser?.username}</Nav.Link></Nav.Item>
+                <Nav.Item><Button onClick={handleLogout}>Log out</Button></Nav.Item>                
+                {loginErrorText && <Alert variant="danger">{loginErrorText}</Alert>}
+            </Nav>)
         :
-            (<div>
-                <p onClick={() => {setShowLogin(current => !current); setShowSignup(false)}}>Log in</p>
-                <p onClick={() => {setShowSignup(current => !current); setShowLogin(false)}}>Sign up</p>
+            (<Nav>
+                <Nav.Item><Nav.Link onClick={() => {setShowLogin(current => !current); setShowSignup(false)}}>Log in</Nav.Link></Nav.Item>
                 {showLogin && <form onSubmit={handleLogin}>
                     <label>Username:<input type="text" name="username"/></label>                    
                     <label>Password:<input type="password" name="password"/></label>
                     <input type="submit" value="Log in"/>
                 </form>}
-                {loginErrorText && <p>{loginErrorText}</p>}
-            </div>)
+                <Nav.Item><Nav.Link onClick={() => {setShowSignup(current => !current); setShowLogin(false)}}>Sign up</Nav.Link></Nav.Item>
+                
+            </Nav>)
         }
-    </div>);
+        </Navbar.Collapse>
+        </Container>        
+    </Navbar>
+    {loginErrorText && <Alert variant="danger">{loginErrorText}</Alert>}
+    </>
+    );
 }
 
 export default Header;

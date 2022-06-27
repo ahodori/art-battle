@@ -17,6 +17,7 @@ class BattlesController < ApplicationController
 
     def create
         battle = Battle.create(battle_params)
+        battle.update(is_ended: false)
         if battle.valid?
             render json: battle, status: :created
         else
@@ -30,6 +31,7 @@ class BattlesController < ApplicationController
         puts battle
         return render json: { error: "Battle not found" }, status: 404 unless battle
         return render json: { error: "Battle already ended" }, status: 422 unless battle.is_ended == false
+        return render json: { error: "Battle needs at least one entrant to end" }, status: 422 unless battle.submissions.length > 0
 
         all_votes = battle.submissions.map { |submission| submission.votes }
         #pp all_votes
@@ -46,7 +48,7 @@ class BattlesController < ApplicationController
 
         battle.update(winner: highest_submission.first, is_ended: true)
         if battle.valid?
-            render json: battle, status: :ok
+            render json: battle, status: :ok, serializer: SingleBattleSerializer
         else
             render json: { error: "Error ending battle" }, status: 500
         end

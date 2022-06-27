@@ -17,8 +17,11 @@ u2 = User.create(username: "bobert", password: "1234", password_confirmation: "1
 b1 = Battle.create(name: "battle 1", prompt: "prompt 1", is_ended: false)
 b2 = Battle.create(name: "battle 2", prompt: "prompt 2", is_ended: false)
 
-s1 = Submission.create(name: "my first song", url: "a", user_id: u1.id, battle_id: b1.id)
-s2 = Submission.create(name: "other song", url: "b", user_id: u2.id, battle_id: b1.id)
+s1 = Submission.create(name: "my first song", url: "https://files.catbox.moe/wyiaix.png", user_id: u1.id, battle_id: b1.id)
+s2 = Submission.create(name: "other song", url: "https://files.catbox.moe/eo4k5a.png", user_id: u2.id, battle_id: b1.id)
+# https://files.catbox.moe/k81zlp.png
+# https://files.catbox.moe/xjgfkq.png
+
 
 v1 = Vote.create(submission_id: s1.id, user_id: u1.id, score: 10)
 v2 = Vote.create(submission_id: s1.id, user_id: u2.id, score: 8)
